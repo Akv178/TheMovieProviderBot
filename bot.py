@@ -47,6 +47,20 @@ LazyPrincessBot.start()
 loop = asyncio.get_event_loop()
 
 
+# Custom get_peer_type function
+def get_peer_type(peer_id: int) -> str:
+    peer_id_str = str(peer_id)
+    if not peer_id_str.startswith("-"):
+        return "user"
+    elif peer_id_str.startswith("-100"):
+        return "channel"
+    else:
+        return "chat"
+
+# Monkey patching the function
+import pyrogram.utils as utils
+utils.get_peer_type = get_peer_type
+
 async def Lazy_start():
     print('\n')
     print('Initalizing The Movie Provider Bot')
